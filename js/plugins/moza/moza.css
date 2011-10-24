@@ -1,0 +1,74 @@
+/* Generic */
+body,html{width:100%;height:100%;padding:0;margin:0;}
+
+/* html5 IE fix */
+header, nav, section, aside, footer, time{
+    display:block
+}
+
+/* Grid */
+#grid{
+    height: 523px;
+    width: 700px;
+    z-index:1;
+    position:relative;
+    margin:0 auto
+}
+#grid .tile{
+	position:absolute;
+    overflow:hidden;
+    display:none;
+}
+
+#grid .tile a{
+    color: #FFFFFF;
+    display: block;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background:#d1d1d1;
+}
+#grid .tile a:hover img{opacity:0.85;}
+#grid img{
+	position:relative;
+    opacity:0;
+}
+#grid .infos{
+    background-color: rgba(0, 0, 0, 0.8);
+    tooltirder: 0 none;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
+#grid .tile span{display:block;}
+#grid .tile .wrapper{
+	padding:7px;
+    margin-top:0;
+    overflow: visible;
+}
+#toolTips .category,
+#grid .category{
+    color: #aaaaaa;
+    display: block;
+    line-height: 11px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+	font-size:9px;
+}
+#grid .big{
+    font-size:14px;
+    line-height:15px;
+}
+#grid .medium{
+    font-size:11px;
+    line-height:14px;
+}
+#grid .small{
+    font-size:12px;
+    line-height:15px;
+}
+#grid .small .infos{
+	display:none;
+}
