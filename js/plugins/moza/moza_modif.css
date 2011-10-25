@@ -7,6 +7,8 @@ header, nav, section, aside, footer, time{
 }
 
 /* Grid */
+#canvasHolder{}
+#testCanvas{background-color:#CCCCCC;margin: 0 auto}
 #grid{
     height: 523px;
     width: 700px;

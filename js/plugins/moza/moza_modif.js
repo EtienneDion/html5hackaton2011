@@ -16,9 +16,7 @@
 			settings = {
 				stage: {
 					width: this.width(),
-					height: this.height(),
-					spacerW: 2 * 100 / this.width(),
-					spacerH: 2 * 100 / this.height()
+					height: this.height()
 				},
 				grid: {
 					width: 10,
@@ -226,13 +224,14 @@
 				var infos = {}, newImageSize;
 				infos = {
 					size: tile.size,
-					x: tile.target.x * grid.tileWidth * 100 / settings.stage.width,
-					y: tile.target.y * grid.tileHeight * 100 / settings.stage.height,
-					width: (tile.width * 100 / settings.grid.width) - settings.stage.spacerW,
-					height: (tile.height * 100 / settings.grid.height) - settings.stage.spacerH,
+					x: tile.target.x * settings.stage.width / settings.grid.width,
+					y: tile.target.y * settings.stage.height / settings.grid.height,
+					width: tile.width * settings.stage.width / settings.grid.width,
+					height: tile.height * settings.stage.height / settings.grid.height,
 					imageTop: 0,
 					imageLeft: 0
 				};
+                console.log(tile.width);
 				return infos;
 			};
 			
@@ -271,13 +270,12 @@
 					i = 0;
 				}
 				//tileTmpl = $("#tileTpl").tmpl(tile[i]).appendTo('#grid');
-				var tile_left=tile[i].x * width /100;
-				var tile_top=tile[i].y * height /100;
-				var tile_width=tile[i].width * width /100;
-				var tile_height=tile[i].height * height /100;
-				
-				var color = grid.chooseColor();
-				var color_over = grid.chooseColor();
+				var tile_left=tile[i].x,
+                    tile_top=tile[i].y,
+                    tile_width=tile[i].width,
+                    tile_height=tile[i].height,
+                    color = grid.chooseColor(),
+                    color_over = grid.chooseColor();
 				
 				target = new Shape();
 				target.name = color;
@@ -294,11 +292,10 @@
 				
 				container.addChild(target);
 				
-				
 				if (i + 1 < tile.length) {
 						grid.showTile(tile, i +1);
 						stage.update();
-				} else  {
+				} else {
 						stage.addChild(container);
 						stage.update();
 				}
