@@ -2,7 +2,14 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
 		<title>Home - Gore Intranet</title>
-		
+
+		<!-- jQuery template -->
+		<script id="tileTpl" type="text/x-jquery-tmpl">
+			<div class="testtile ${size}" style="width:${width}px;height:${height}px;top:${y}px;left:${x}px;" data-id="${id}">
+				<a href="#"></a>
+			</div>
+		</script>
+		<!-- /jQuery template -->
         
         <!-- Import EaselJS Framework -->
 		<script src="easeljs/src/easeljs/utils/UID.js"></script>
@@ -16,13 +23,6 @@
         <script src="easeljs/src/easeljs/display/Stage.js"></script>
 
 
-		<!-- jQuery template 
-		<script id="tileTpl" type="text/x-jquery-tmpl">
-			<div class="tile ${size}" style="width:${width}%;height:${height}%;top:${y}%;left:${x}%;" data-id="${id}">
-				<a href="#"></a>
-			</div>
-		</script>
-		 /jQuery template -->
          
          <link rel="stylesheet" href="js/plugins/moza/moza_modif.css" type="text/css" charset="utf-8" />
 		<!--<link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />-->
@@ -42,7 +42,7 @@
 		
 			$(function () {
 				$('#testCanvas').showGrid({
-					Items: 30,
+					Items: 40,
 					random: true,
 					tile: {
 						big : {
@@ -56,7 +56,7 @@
 							'height': 2
 						},
 						small : {
-							'max': 10,
+							'max': 40,
 							'width': 1,
 							'height': 1
 						}
@@ -65,24 +65,13 @@
 			});
 			
 		</script>
-        <style>
-		.tile{
-        	display:inline-block;
-			*display:inline;
-			width:50px;
-			height:50px;
-			background-color:#000;
-			text-indent:-55000px;
-			margin-right:10px;
-		}
-        </style>
 	</head>
 	<body>
 	
 		
          <div id="canvas"></div>
         <div id="canvasHolder">
-			<canvas id="testCanvas" width="1000" height="700"></canvas>
+			<canvas id="testCanvas" width="600" height="500"></canvas>
 		</div>
    
     

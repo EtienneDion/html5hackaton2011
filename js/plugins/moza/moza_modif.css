@@ -7,24 +7,27 @@ header, nav, section, aside, footer, time{
 }
 
 /* Grid */
-#canvasHolder{}
+#canvasHolder{position: relative;width:600px;height:500px;margin: 0 auto;}
 #testCanvas{background-color:#CCCCCC;margin: 0 auto}
-#grid{
-    height: 523px;
-    width: 700px;
-    z-index:1;
-    position:relative;
-    margin:0 auto;
-    background-color:gray;
+
+.tile{
+	display:inline-block;
+	*display:inline;
+	width:50px;
+	height:50px;
+	background-color:#000;
+	text-indent:-55000px;
+	margin-right:10px;
 }
 
-#grid .tile{
+.testtile{
 	position:absolute;
     overflow:hidden;
     display:none;
+	border: 1px solid black
 }
 
-#grid .tile a{
+.testtile a{
     color: #FFFFFF;
     display: block;
     height: 100%;
@@ -32,35 +35,7 @@ header, nav, section, aside, footer, time{
     z-index: 1;
     background:#d1d1d1;
 }
-#grid .tile a:hover img{opacity:0.85;}
-#grid img{
-	position:relative;
-    opacity:0;
-}
-#grid .infos{
-    background-color: rgba(0, 0, 0, 0.8);
-    tooltirder: 0 none;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    width: 100%;
-    z-index: 2;
-}
-#grid .tile span{display:block;}
-#grid .tile .wrapper{
-	padding:7px;
-    margin-top:0;
-    overflow: visible;
-}
-#toolTips .category,
-#grid .category{
-    color: #aaaaaa;
-    display: block;
-    line-height: 11px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-	font-size:9px;
-}
+
 #grid .big{
     font-size:14px;
     line-height:15px;

@@ -229,10 +229,10 @@
 					i = 0;
 				}
 				tileTmpl = $("#tileTpl").tmpl(tile[i]).appendTo('#grid');
+
 				/**
 				* Remove animation for IE 8 and below because they cannot take it well. It't just to much for them.
 				*/
-				
 				tileTmpl.css('top', tile[i].y + 1 + '%').animate({
 					opacity: 'show',
 					top: tile[i].y + '%'

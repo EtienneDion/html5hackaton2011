@@ -41,7 +41,7 @@
 						height: 1
 					}
 				},
-				testMode: false,
+				testmode: false,
 				random: true
 			},
 			Coords = {
@@ -231,7 +231,7 @@
 					imageTop: 0,
 					imageLeft: 0
 				};
-                console.log(tile.width);
+                console.log(infos.width, infos.height, infos.x, infos.y);
 				return infos;
 			};
 			
@@ -269,51 +269,47 @@
 				if (i === undefined) {
 					i = 0;
 				}
-				//tileTmpl = $("#tileTpl").tmpl(tile[i]).appendTo('#grid');
-				var tile_left=tile[i].x,
-                    tile_top=tile[i].y,
-                    tile_width=tile[i].width,
-                    tile_height=tile[i].height,
-                    color = grid.chooseColor(),
-                    color_over = grid.chooseColor();
+
 				
+				/*var tile_left = tile[i].x,
+					tile_top = tile[i].y,
+					tile_width = tile[i].width,
+					tile_height = tile[i].height,
+					color = grid.chooseColor(),
+					color_over = grid.chooseColor();
+
+				//console.log('tile info', tile_left, tile_top, tile_width, tile_height);
+
 				target = new Shape();
 				target.name = color;
-				target.graphics.beginFill(color).drawRect(tile_top,tile_left,tile_width,tile_height).beginFill(color);
+				target.graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
 				target.strokeStyle = '#f00';
 				target.lineWidth   = 4;
 				
-				console.log("on load /top:"+tile_top+" left:" +tile_left  +" width:"+tile_width+" height:"+tile_height+" color:"+color+ " this:"+target.name );
+				//console.log("on load /top:" + tile_top + " left:" + tile_left  + " width:" + tile_width + " height:" + tile_height + " color:" + color + " this:" + target.name);
 				
 				target.onClick = function(evt) {
-					console.log("on click /top:"+tile_top+" left:" +tile_left  +" width:"+tile_width+" height:"+tile_height+" color:"+color_over+ " this:"+this);
-					this.graphics.beginFill(color_over).drawRect(tile_top,tile_left,tile_width,tile_height).beginFill(color_over);
+					//console.log("on click /top:" + tile_top + " left:" + tile_left  + " width:" + tile_width + " height:" + tile_height + " color:" + color_over+ " this:" + this);
+					this.graphics.beginFill(color_over).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color_over);
 				}
-				
+
 				container.addChild(target);
-				
+
 				if (i + 1 < tile.length) {
-						grid.showTile(tile, i +1);
-						stage.update();
+					grid.showTile(tile, i +1);
+					stage.update();
 				} else {
-						stage.addChild(container);
-						stage.update();
-				}
-				
+					stage.addChild(container);
+				    stage.update();
+				}*/
+
 				/**
-				* Remove animation for IE 8 and below because they cannot take it well. It't just to much for them.
+				* TEST MODE
 				*/
-				/*
-				tileTmpl.css('top', tile[i].y + 1 + '%').animate({
-					opacity: 'show',
-					top: tile[i].y + '%'
-				}, animSpeed, function() {
-					if (i + 1 < tile.length) { 
-						grid.showTile(tile, i +1);
-					} 
-				});
-				
-				*/
+				if(settings.testmode == true) {
+					tileTmpl = $("#tileTpl").tmpl(tile[i]).appendTo('#canvasHolder');
+					tileTmpl.show();
+				}
 			}
 
 			/**
@@ -331,7 +327,7 @@
 							size = 'small';
 						}
 						tile = new Tile(size, i);
-						// get all the coord neded for that tile
+						// get all the coord needed for that tile
 						tileOccupationCoords = tile.getOccupationFromCoord(tile.target);
 						// remove the needed coords in the free array and put them in the taken array
 						for (j = 0; j < tileOccupationCoords.length; j += 1) {
