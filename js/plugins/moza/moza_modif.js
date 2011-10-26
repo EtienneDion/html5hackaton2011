@@ -154,6 +154,10 @@
 				}
 			}
 			tile.target = this.targets[0];
+			tile.x = tile.target.x * settings.stage.width / settings.grid.width;
+			tile.y = tile.target.y * settings.stage.height / settings.grid.height;
+			tile.fullWidth = tile.width * settings.stage.width / settings.grid.width;
+			tile.fullHeight = tile.height * settings.stage.height / settings.grid.height;
 		}
 
 		Moza.Coord = Coord;
@@ -236,94 +240,52 @@
 				this.Coords.free = _.clone(this.Coords.all);
 				return this.Coords;
 			};
-
-			/**
-			* Get all the info about the tile. (position, size, id, title, etc.)
-			*/
-			this.getTileInfos = function(tile, item) {
-				var infos = {}, newImageSize;
-				infos = {
-					size: tile.size,
-					x: tile.target.x * settings.stage.width / settings.grid.width,
-					y: tile.target.y * settings.stage.height / settings.grid.height,
-					width: tile.width * settings.stage.width / settings.grid.width,
-					height: tile.height * settings.stage.height / settings.grid.height,
-					imageTop: 0,
-					imageLeft: 0,
-                    color: tile.color,
-                    color_over:tile.color_over,
-                    id: tile.id
-				};
-                
-				return infos;
-			};
 			
 
 			/**
 			* Show tile one after the other.
 			*/
-
-			this.showTile = function(tile, i) {
-				var tileTmpl, tileCtn, animSpeed = 50;
-				if (i === undefined) {
-					i = 0;
+			this.showTile = function(tileQueuePosition) {
+				var tile;
+				if (tileQueuePosition === undefined) {
+					tileQueuePosition = 0;
 				}
-
-				var tile_top = tile[i].x,
-					tile_left = tile[i].y,
-					tile_width = tile[i].width,
-					tile_height = tile[i].height,
-					color = tile[i].color,
-					color_over = tile[i].color_over;
+				tile = tileQueue[tileQueuePosition];
 
                 simon = new Shape();
-
-                simon.graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
-
+				simon.graphics.beginFill(tile.color).drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginFill(tile.color);
 
 				simon.onClick = function(evt) {
                     grid.recordTileInfos(tile);
-                    this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile_top, tile_left, tile_width, tile_height).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
-                    console.log("error");
-
+                    this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
+                    console.log(this.id);
                     stage.update();
 				}
 
 				container.addChild(simon);
 
-				if (i + 1 < tile.length) {
-					grid.showTile(tile, i +1);
+				if (tileQueuePosition + 1 < tileQueue.length) {
+					grid.showTile(tileQueuePosition +1);
 					stage.update();
 				} else {
 					stage.addChild(container);
-				    stage.update();
+					stage.update();
 				}
 			};
 
             this.showOneTile = function(tile, over) {
-
-				var tileTmpl, tileCtn, animSpeed = 50;
-
-				var tile_top = tile.x,
-					tile_left = tile.y,
-					tile_width = tile.width,
-					tile_height = tile.height,
-					color = tile.color,
-					color_over = tile.color_over;
-                    
                 simon= new Shape();
                 simon.id = tile.id;
 
-                
                 if (over){
-                    simon.graphics.beginFill("#000000").drawRect(tile_top, tile_left, tile_width, tile_height).beginFill("#000000");
+                    simon.graphics.beginFill("#000000").drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginFill("#000000");
                 } else {
-                    simon.graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
+                    simon.graphics.beginFill(tile.color).drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginFill(tile.color);
                 }
 
                 simon.onClick = function(evt) {
                     grid.recordTileInfos(tile);
-                    this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile_top, tile_left, tile_width, tile_height).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
+                    this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
                     console.log(this.id);
                     listen_sequence(this.id);
                     stage.update();
@@ -396,12 +358,10 @@
 						}
 
 						//add info to queue
-						tileQueue[i] = grid.getTileInfos(tile, settings.Items[i]);
-
-                        
+						tileQueue[i] = tile;
 					}
 				}
-				grid.showTile(tileQueue);
+				grid.showTile();
 				//console.log(Coords.history);
 				$('#resetGrid').click(function(ev){
 					ev.preventDefault();
@@ -427,7 +387,7 @@
 
                     var timeoutID = window.setTimeout(function(){
 
-                        grid.showOneTile(tileQueue[sequence[e]], 1);
+                        //grid.showOneTile(tileQueue[sequence[e]],sequence[e]);
 
                         //console.log(sequence[e]);
                     }, (e+1)*1000);
