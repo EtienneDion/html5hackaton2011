@@ -402,7 +402,7 @@
             this.generateSequence = function () {
                 sequence = [];
                 for(var i=1;i<=level;i++){
-                    var random = Math.round(Math.random()*3) +1;
+                    var random = Math.round(Math.random()*tileQueue.length) +1;
                     sequence.push(random);
                 }
                 console.log("Sequence:"+sequence);
