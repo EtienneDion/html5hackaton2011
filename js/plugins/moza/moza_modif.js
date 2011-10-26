@@ -1,4 +1,3 @@
-/*global window, console, jQuery, undef */
 (function ($, undef) {
 	"use strict";
 
@@ -338,3 +337,28 @@
 		grid.placeTiles();
 	};
 }(jQuery));
+
+
+$(function () {
+	$('#testCanvas').showGrid({
+		Items: 40,
+		random: true,
+		tile: {
+			big : {
+				'max': 1,
+				'width': 3,
+				'height': 3
+			},
+			medium : {
+				'max': 6,
+				'width': 2,
+				'height': 2
+			},
+			small : {
+				'max': 40,
+				'width': 1,
+				'height': 1
+			}
+		}
+	});
+});
