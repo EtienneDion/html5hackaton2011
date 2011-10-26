@@ -66,10 +66,10 @@
 		
 		var container;
 		var txt;
-		var target;
+		var simon=[];
 		canvas = document.getElementById("stage");
 		stage = new Stage(canvas);
-		
+
 		// Create a new Text object and a rectangle Shape object, and position them inside a container:
 		container = new Container;
 		container.x = 0;
@@ -265,21 +265,26 @@
 					color_over = grid.chooseColor();
 
 				//console.log('tile info', tile_left, tile_top, tile_width, tile_height);
+                var button = [];
+                simon.push(button);
+                simon.button[i]= new Shape();
+				simon.button[i].graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
+				simon.button[i].strokeStyle = '#f00';
+				simon.button[i].lineWidth   = 4;
 
-				target = new Shape();
-				target.name = color;
-				target.graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
-				target.strokeStyle = '#f00';
-				target.lineWidth   = 4;
-				
+
 				//console.log("on load /top:" + tile_top + " left:" + tile_left  + " width:" + tile_width + " height:" + tile_height + " color:" + color + " this:" + target.name);
 				
-				target.onClick = function(evt) {
+				simon.button.onClick = function(evt) {
 					//console.log("on click /top:" + tile_top + " left:" + tile_left  + " width:" + tile_width + " height:" + tile_height + " color:" + color_over+ " this:" + this);
-					this.graphics.beginFill(color_over).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color_over);
-				}
+					simon.button[i].graphics.fillRect(color_over);
 
-				container.addChild(target);
+
+                    stage.update();
+				}
+               
+                
+				container.addChild(simon);
 
 				if (i + 1 < tile.length) {
 					grid.showTile(tile, i +1);
