@@ -270,9 +270,9 @@
 					i = 0;
 				}
 
-				
-				/*var tile_left = tile[i].x,
-					tile_top = tile[i].y,
+				// NOTE A ETIENNE: ta inverse le x et le y mouhaha. tout etait ok
+				var tile_top = tile[i].x,
+					tile_left = tile[i].y,
 					tile_width = tile[i].width,
 					tile_height = tile[i].height,
 					color = grid.chooseColor(),
@@ -301,14 +301,6 @@
 				} else {
 					stage.addChild(container);
 				    stage.update();
-				}*/
-
-				/**
-				* TEST MODE
-				*/
-				if(settings.testmode == true) {
-					tileTmpl = $("#tileTpl").tmpl(tile[i]).appendTo('#canvasHolder');
-					tileTmpl.show();
 				}
 			}
 

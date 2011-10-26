@@ -27,14 +27,6 @@ header, nav, section, aside, footer, time{
 	border: 1px solid black
 }
 
-.testtile a{
-    color: #FFFFFF;
-    display: block;
-    height: 100%;
-    width: 100%;
-    z-index: 1;
-    background:#d1d1d1;
-}
 
 #grid .big{
     font-size:14px;

@@ -1,1 +1,2 @@
+- add testmode option. when its set to true, oyu can see html tile on top of the canva tile. 
 - convert % into px for tile size and position
