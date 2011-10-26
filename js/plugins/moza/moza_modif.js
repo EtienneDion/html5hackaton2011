@@ -64,7 +64,8 @@
 			tileWidth = '',
 			tileheight = '',
 			x = 0,
-			y = 0;
+			y = 0,
+			tileQueue = [];
 
 		// Merge the default and user settings
 		if (options) {
@@ -319,7 +320,7 @@
 			* Place the tile in the grid.
 			*/
 			this.placeTiles = function () {
-				var i, j, k, tile, size = 'medium', tileOccupationCoords, tileQueue = [], tileFound;;
+				var i, j, k, tile, size = 'medium', tileOccupationCoords, tileFound;
 				for (i = 0; i < settings.Items; i += 1) {
 					if (!_.isEmpty(grid.Coords.free)) {
 						tileFound = false;
@@ -334,26 +335,25 @@
 
 
 						// check if tile is already in history
-						//console.log('check if ' , i, 'is in history ', History[i]);
-						console.log(History.length, ' = history length -----------------');
 						if ( History.length > 0) {
-							console.log('check if tile already in the grid');
 							for ( k = 0; k < History.length; k += 1) {
 								if(History[k].id == i) {
+									//get tile info in history
 									tile = History[k];
-tileFound = true;
-										console.log('tile found in history: ', tile);
+									tileFound = true;
 								}
 							}
 						}
-console.log('check if tile exist ', tile);
+
+						//if tile is not in history, create a new one
 						if(tileFound === false) {
 							// tile is not in history
 							// create new one
 							tile = new Tile(size, i);
-
 						}
 
+
+						//only for test
 						if (History.length < 2){
 							if(i == 0 || i == 10){
 								grid.recordTileInfos(tile);
