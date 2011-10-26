@@ -2,11 +2,11 @@
 	"use strict";
 
     var sequence = [],
-    level = 3;
+    level = 4;
 
 	var Moza = {};
 	window.Moza = Moza;
-   
+    var current = 0;
 	/**
 	* Define grid specification
 	*/
@@ -256,9 +256,8 @@
 				simon.graphics.beginFill(tile.color).drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginFill(tile.color);
 
 				simon.onClick = function(evt) {
-                    grid.recordTileInfos(tile);
-                    this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
-                    console.log(this.id);
+                     console.log("error");
+
                     stage.update();
 				}
 
@@ -287,7 +286,7 @@
                     grid.recordTileInfos(tile);
                     this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
                     console.log(this.id);
-                    listen_sequence(this.id);
+                    grid.listen_sequence(this.id);
                     stage.update();
 				}
 
@@ -387,7 +386,7 @@
 
                     var timeoutID = window.setTimeout(function(){
 
-                        //grid.showOneTile(tileQueue[sequence[e]],sequence[e]);
+                        grid.showOneTile(tileQueue[sequence[e]],sequence[e]);
 
                         //console.log(sequence[e]);
                     }, (e+1)*1000);
@@ -425,31 +424,27 @@
                 });
             };
 
-            this.listen_sequence = function (current) {
-           
-                if( $(this).attr("id") == sequence[current] ){
-                    console.log('bravo');
-                    $("#canvas div.tile").unbind("click");
+            this.listen_sequence = function (clicked) {
+                 console.log(clicked);
+                if( sequence[current] == clicked ){
+
+
                     current+=1;
                     if( current < level ){
-                        listen_sequence(current);
+                        console.log('bravo');
 
                     } else {
                         alert("bravo");
                         level +=1;
-                        generate_grid();
-                         generate_sequence();
-                        play_sequence();
-                        listen_sequence(0);
+                       //grid.generateSequence();
+                       //grid.playSequence();
+                        $('#stage').showGrid();
                     }
                 } else {
-                    $("#canvas div.tile").unbind("click");
-                    console.log("error : expected:"+sequence[current]);
                     alert("error : expected:"+sequence[current]);
-                    generate_grid();
-                    generate_sequence();
-                    play_sequence();
-                    listen_sequence(0);
+                    //grid.generateSequence();
+                    //grid.playSequence();
+
                 }
 
 }
