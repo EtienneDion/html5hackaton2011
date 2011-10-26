@@ -87,14 +87,14 @@
 
         function chooseColor(){
 				var colors = new Array(14);
-				colors[0]="0";
-				colors[1]="1";
-				colors[2]="2";
-				colors[3]="3";
-				colors[4]="4";
-				colors[5]="5";
-				colors[5]="6";
-				colors[6]="7";
+				colors[0]="8";
+				colors[1]="9";
+				colors[2]="a";
+				colors[3]="b";
+				colors[4]="c";
+				colors[5]="d";
+				colors[5]="e";
+				colors[6]="f";
 				colors[7]="8";
 				colors[8]="9";
 				colors[9]="a";
@@ -106,7 +106,7 @@
 
 				var digit = new Array(5);
 
-			    var color = "#"+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)];
+			    var color = "#"+colors[Math.round(Math.random()*7)]+""+colors[Math.round(Math.random()*7)]+""+colors[Math.round(Math.random()*7)]+""+colors[Math.round(Math.random()*7)]+""+colors[Math.round(Math.random()*7)]+""+colors[Math.round(Math.random()*7)];
 
 				return color;
 		}
@@ -253,12 +253,13 @@
 				tile = tileQueue[tileQueuePosition];
 
                 simon = new Shape();
-				simon.graphics.beginFill(tile.color).drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginFill(tile.color);
 
+                
+				simon.graphics.beginFill(tile.color).drawRoundRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight,5).beginFill(tile.color);
 				simon.onClick = function(evt) {
-                     console.log("error");
-
-                    stage.update();
+                     //console.log("error");
+                     grid.listen_sequence(this.id);
+                     stage.update();
 				}
 
 				container.addChild(simon);
@@ -277,15 +278,14 @@
                 simon.id = tile.id;
 
                 if (over){
-                    simon.graphics.beginFill("#000000").drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginFill("#000000");
+                    simon.graphics.beginFill("#ffffff").drawRoundRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight, 5).beginFill("#ffffff");
                 } else {
-                    simon.graphics.beginFill(tile.color).drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginFill(tile.color);
+                    simon.graphics.beginFill(tile.color).drawRoundRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight,5).beginFill(tile.color);
                 }
 
                 simon.onClick = function(evt) {
                     grid.recordTileInfos(tile);
-                    this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
-                    console.log(this.id);
+                    simon.graphics.beginFill("#ffffff").drawRoundRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight,5).beginFill("#ffffff");console.log(this.id);
                     grid.listen_sequence(this.id);
                     stage.update();
 				}
@@ -401,13 +401,13 @@
                         level +=1;
                        //grid.generateSequence();
                        //grid.playSequence();
-                        $('#stage').showGrid();
+                        $('#stage').showGrid(History);
                     }
                 } else {
                     alert("error : expected:"+sequence[current]);
                     //grid.generateSequence();
                     //grid.playSequence();
-
+                    $('#stage').showGrid();
                 }
 
 }
