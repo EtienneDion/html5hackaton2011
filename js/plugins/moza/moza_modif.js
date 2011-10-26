@@ -66,26 +66,14 @@
 		var container;
 		var txt;
 		var target;
-		canvas = document.getElementById("testCanvas");
+		canvas = document.getElementById("stage");
 		stage = new Stage(canvas);
 		
 		// Create a new Text object and a rectangle Shape object, and position them inside a container:
 		container = new Container;
 		container.x = 0;
 		container.y = 0;
-		
-		// Returns the version of Internet Explorer or a -1
-		// (indicating the use of another browser).
-		function getInternetExplorerVersion() {
-			var rv = -1; // Return value assumes failure.
-			if (navigator.appName == 'Microsoft Internet Explorer') {
-				var ua = navigator.userAgent;
-				var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-				if (re.exec(ua) != null)
-				rv = parseFloat( RegExp.$1 );
-			}
-			return rv;
-		}
+
 
 		function Coord(x, y) {
 			this.x = x;
@@ -146,7 +134,6 @@
 			grid.Coords = Coords;
 			grid.tileWidth = settings.stage.width / settings.grid.width;
 			grid.tileHeight = settings.stage.height / settings.grid.height;
-			grid.IE = getInternetExplorerVersion();
 			this.checkPlacabilityOfTile = function (tile, calNumber) {
 				// Iterate across each free coordinates to test if the tile can be placed
 				// var 
@@ -261,7 +248,6 @@
 			}
 			/**
 			* Show tile one after the other.
-			* No animation for IE8 and above
 			*/
 			this.showTile = function(tile, i) {
 				var tileTmpl, tileCtn, animSpeed = 50;

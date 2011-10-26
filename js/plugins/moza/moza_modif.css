@@ -8,8 +8,7 @@ header, nav, section, aside, footer, time{
 
 /* Grid */
 #canvasHolder{position: relative;width:600px;height:500px;margin: 0 auto;}
-#testCanvas{background-color:#CCCCCC;margin: 0 auto}
-
+#stage{background-color:#CCCCCC;margin: 0 auto}
 .tile{
 	display:inline-block;
 	*display:inline;
@@ -18,28 +17,4 @@ header, nav, section, aside, footer, time{
 	background-color:#000;
 	text-indent:-55000px;
 	margin-right:10px;
-}
-
-.testtile{
-	position:absolute;
-    overflow:hidden;
-    display:none;
-	border: 1px solid black
-}
-
-
-#grid .big{
-    font-size:14px;
-    line-height:15px;
-}
-#grid .medium{
-    font-size:11px;
-    line-height:14px;
-}
-#grid .small{
-    font-size:12px;
-    line-height:15px;
-}
-#grid .small .infos{
-	display:none;
 }
