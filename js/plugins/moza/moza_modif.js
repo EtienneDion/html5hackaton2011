@@ -361,7 +361,7 @@
 					}
 				}
 				grid.showTile();
-				//console.log(Coords.history);
+				console.log(tileQueue.length);
 				$('#resetGrid').click(function(ev){
 					ev.preventDefault();
 					//console.log(History);
@@ -373,7 +373,7 @@
             this.generateSequence = function () {
                 sequence = [];
                 for(var i=1;i<=level;i++){
-                    var random = Math.round(Math.random()*tileQueue.length);
+                    var random = Math.round(Math.random()*(tileQueue.length -1));
                     sequence.push(random);
                 }
                 console.log("Sequence:"+sequence);
@@ -381,32 +381,22 @@
 
 
             this.playSequence = function () {
-
                 $(sequence).each(function (e){
-
-
                     var timeoutID = window.setTimeout(function(){
-
+						console.log(sequence[e]);
                         grid.showOneTile(tileQueue[sequence[e]], 1);
-
                         //console.log(sequence[e]);
                     }, (e+1)*1000);
 
-
                     var timeoutID2 = window.setTimeout(function(){
-
                         grid.showOneTile(tileQueue[sequence[e]], 0);
-
                     }, (e+1)*1000+500+((e+1)*100));
-
                 });
             };
 
             this.listen_sequence = function (clicked) {
                  console.log(clicked);
                 if( sequence[current] == clicked ){
-
-
                     current+=1;
                     if( current < level ){
                         console.log('bravo');
