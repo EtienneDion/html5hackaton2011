@@ -251,7 +251,8 @@
 					imageTop: 0,
 					imageLeft: 0,
                     color: tile.color,
-                    color_over:tile.color_over
+                    color_over:tile.color_over,
+                    id: tile.id
 				};
                 
 				return infos;
@@ -275,14 +276,15 @@
 					color = tile[i].color,
 					color_over = tile[i].color_over;
 
-                simon= new Shape();
+                simon = new Shape();
+
                 simon.graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
 
 
 				simon.onClick = function(evt) {
                     grid.recordTileInfos(tile);
                     this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile_top, tile_left, tile_width, tile_height).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
-                    console.log(this.id);
+                    console.log("error");
 
                     stage.update();
 				}
@@ -308,14 +310,24 @@
 					tile_height = tile.height,
 					color = tile.color,
 					color_over = tile.color_over;
-
+                    
                 simon= new Shape();
+                simon.id = tile.id;
 
+                
                 if (over){
                     simon.graphics.beginFill("#000000").drawRect(tile_top, tile_left, tile_width, tile_height).beginFill("#000000");
                 } else {
                     simon.graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
                 }
+
+                simon.onClick = function(evt) {
+                    grid.recordTileInfos(tile);
+                    this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile_top, tile_left, tile_width, tile_height).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
+                    console.log(this.id);
+
+                    stage.update();
+				}
 
 				container.addChild(simon);
                 stage.addChild(container);
