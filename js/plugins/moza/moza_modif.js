@@ -42,7 +42,7 @@
 				},
 				testmode: false,
 				random: true,
-				Items: 40
+				Items: 30
 			},
 			Coords = {
 				all: [],
@@ -66,7 +66,7 @@
 		
 		var container;
 		var txt;
-		var simon=[];
+		var simon= [];
 		canvas = document.getElementById("stage");
 		stage = new Stage(canvas);
 
@@ -81,16 +81,45 @@
 			this.y = y;
 		}
 
+        function chooseColor(){
+				var colors = new Array(14)
+				colors[0]="0";
+				colors[1]="1";
+				colors[2]="2";
+				colors[3]="3";
+				colors[4]="4";
+				colors[5]="5";
+				colors[5]="6";
+				colors[6]="7";
+				colors[7]="8";
+				colors[8]="9";
+				colors[9]="a";
+				colors[10]="b";
+				colors[11]="c";
+				colors[12]="d";
+				colors[13]="e";
+				colors[14]="f";
+
+				var digit = new Array(5);
+
+			    var color = "#"+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)];
+
+				return color;
+		}
+
 		function Tile(size, callNumber) {
 			var i, tile, tileSize;
 			tile = this;
+            tile.id = callNumber;
 			tile.size = size;
 			tile.width = settings.tile[size].width;
 			tile.height = settings.tile[size].height;
 			tile.coord = null;
 			tile.targets = [];
 			tile.target = [];
-
+            tile.color = chooseColor();
+            tile.color_over = chooseColor();
+            
 			/**
 			* Get all coords needed to place this tile
 			*/
@@ -183,7 +212,7 @@
 
 			this.shuffle = function (array) {
 				var j, x, i;
-				for (j, x, i = array.length; i; j = parseInt(Math.random() * i, 10), x = array[--i], array[i] = array[j], array[j] = x) {
+				for (j, x, i = array.length; i; j = parseInt(0.4 * i, 10), x = array[--i], array[i] = array[j], array[j] = x) {
 				}
 				return array;
 			};
@@ -216,40 +245,19 @@
 					width: tile.width * settings.stage.width / settings.grid.width,
 					height: tile.height * settings.stage.height / settings.grid.height,
 					imageTop: 0,
-					imageLeft: 0
+					imageLeft: 0,
+                    color: tile.color,
+                    color_over:tile.color_over
 				};
                 console.log(infos.width, infos.height, infos.x, infos.y);
 				return infos;
 			};
 			
-			this.chooseColor = function() {
-				var colors = new Array(14)
-				colors[0]="0";
-				colors[1]="1";
-				colors[2]="2";
-				colors[3]="3";
-				colors[4]="4";
-				colors[5]="5";
-				colors[5]="6";
-				colors[6]="7";
-				colors[7]="8";
-				colors[8]="9";
-				colors[9]="a";
-				colors[10]="b";
-				colors[11]="c";
-				colors[12]="d";
-				colors[13]="e";
-				colors[14]="f";
-				
-				var digit = new Array(5);
-				
-			    var color = "#"+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)]+""+colors[Math.round(Math.random()*14)];
-				
-				return color;
-			}
+
 			/**
 			* Show tile one after the other.
 			*/
+
 			this.showTile = function(tile, i) {
 				var tileTmpl, tileCtn, animSpeed = 50;
 				if (i === undefined) {
@@ -261,29 +269,22 @@
 					tile_left = tile[i].y,
 					tile_width = tile[i].width,
 					tile_height = tile[i].height,
-					color = grid.chooseColor(),
-					color_over = grid.chooseColor();
+					color = tile[i].color,
+					color_over = tile[i].color_over;
 
-				//console.log('tile info', tile_left, tile_top, tile_width, tile_height);
-                var button = [];
-                simon.push(button);
-                simon.button[i]= new Shape();
-				simon.button[i].graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
-				simon.button[i].strokeStyle = '#f00';
-				simon.button[i].lineWidth   = 4;
+                simon= new Shape();
+                simon.graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
 
 
-				//console.log("on load /top:" + tile_top + " left:" + tile_left  + " width:" + tile_width + " height:" + tile_height + " color:" + color + " this:" + target.name);
-				
-				simon.button.onClick = function(evt) {
-					//console.log("on click /top:" + tile_top + " left:" + tile_left  + " width:" + tile_width + " height:" + tile_height + " color:" + color_over+ " this:" + this);
-					simon.button[i].graphics.fillRect(color_over);
+				simon.onClick = function(evt) {
 
-
+                    this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile_top, tile_left, tile_width, tile_height).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
+                    console.log(this.id);
                     stage.update();
 				}
                
-                
+
+
 				container.addChild(simon);
 
 				if (i + 1 < tile.length) {
