@@ -26,7 +26,7 @@
 				//just create more if you need it. ex: xl for xlarge :)
 				tile: {
 					big : {
-						max: 1,
+						max: 3,
 						width: 3,
 						height: 3
 					},
@@ -36,14 +36,14 @@
 						height: 2
 					},
 					small : {
-						max: 40,
+						max: 4,
 						width: 1,
 						height: 1
 					}
 				},
 				testmode: false,
 				random: true,
-				Items: 30
+				Items: 20
 			},
 			Coords = {
 				all: [],
@@ -325,7 +325,7 @@
                     grid.recordTileInfos(tile);
                     this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile_top, tile_left, tile_width, tile_height).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
                     console.log(this.id);
-
+                    listen_sequence(this.id);
                     stage.update();
 				}
 
@@ -441,7 +441,58 @@
 
                 });
             };
-            
+
+
+            this.playSequence = function () {
+
+                $(sequence).each(function (e){
+
+
+                    var timeoutID = window.setTimeout(function(){
+
+                        grid.showOneTile(tileQueue[sequence[e]], 1);
+
+                        //console.log(sequence[e]);
+                    }, (e+1)*1000);
+
+
+                    var timeoutID2 = window.setTimeout(function(){
+
+                        grid.showOneTile(tileQueue[sequence[e]], 0);
+
+                    }, (e+1)*1000+500+((e+1)*100));
+
+                });
+            };
+
+            this.listen_sequence = function (current) {
+           
+                if( $(this).attr("id") == sequence[current] ){
+                    console.log('bravo');
+                    $("#canvas div.tile").unbind("click");
+                    current+=1;
+                    if( current < level ){
+                        listen_sequence(current);
+
+                    } else {
+                        alert("bravo");
+                        level +=1;
+                        generate_grid();
+                         generate_sequence();
+                        play_sequence();
+                        listen_sequence(0);
+                    }
+                } else {
+                    $("#canvas div.tile").unbind("click");
+                    console.log("error : expected:"+sequence[current]);
+                    alert("error : expected:"+sequence[current]);
+                    generate_grid();
+                    generate_sequence();
+                    play_sequence();
+                    listen_sequence(0);
+                }
+
+}
 
 
 		}
