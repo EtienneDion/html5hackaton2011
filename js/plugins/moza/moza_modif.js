@@ -263,7 +263,7 @@
 
 				container.addChild(simon);
 
-				if (tileQueuePosition + 1 < tileQueue.length) {
+				if (tileQueuePosition +1 < tileQueue.length) {
 					grid.showTile(tileQueuePosition +1);
 					stage.update();
 				} else {
@@ -378,8 +378,6 @@
                 }
                 console.log("Sequence:"+sequence);
             };
-
-           
 
 
             this.playSequence = function () {

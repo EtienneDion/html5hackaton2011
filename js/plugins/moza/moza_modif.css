@@ -18,3 +18,17 @@ header, nav, section, aside, footer, time{
 	text-indent:-55000px;
 	margin-right:10px;
 }
+
+body{
+
+  background-color:#000;
+
+}
+
+h1{
+
+    margin-left:auto;
+    margin-right:auto;
+    color: #fff;
+    width:250px;
+}
