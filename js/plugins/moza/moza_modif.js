@@ -6,17 +6,7 @@
 
 	var Moza = {};
 	window.Moza = Moza;
-
-    $.fn.generateSequence = function (options) {
-        sequence = [];
-        for(var i=1;i<=level;i++){
-            var random = Math.round(Math.random()*3) +1;
-            sequence.push(random);
-        }
-        console.log("Sequence:"+sequence);
-    };
-
-
+   
 	/**
 	* Define grid specification
 	*/
@@ -96,7 +86,7 @@
 		}
 
         function chooseColor(){
-				var colors = new Array(14)
+				var colors = new Array(14);
 				colors[0]="0";
 				colors[1]="1";
 				colors[2]="2";
@@ -278,7 +268,6 @@
 					i = 0;
 				}
 
-				// NOTE A ETIENNE: ta inverse le x et le y mouhaha. tout etait ok
 				var tile_top = tile[i].x,
 					tile_left = tile[i].y,
 					tile_width = tile[i].width,
@@ -291,12 +280,12 @@
 
 
 				simon.onClick = function(evt) {
+                    grid.recordTileInfos(tile);
                     this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile_top, tile_left, tile_width, tile_height).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
                     console.log(this.id);
+
                     stage.update();
 				}
-               
-
 
 				container.addChild(simon);
 
@@ -307,14 +296,43 @@
 					stage.addChild(container);
 				    stage.update();
 				}
+			};
+
+            this.showOneTile = function(tile, i) {
+				var tileTmpl, tileCtn, animSpeed = 50;
+				if (i === undefined) {
+					i = 0;
+				}
+
+
+				var tile_top = tile[i].x,
+					tile_left = tile[i].y,
+					tile_width = tile[i].width,
+					tile_height = tile[i].height,
+					color = tile[i].color,
+					color_over = tile[i].color_over;
+
+                simon= new Shape();
+                simon.graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
+
+				container.addChild(simon);
+
+				if (i + 1 < tile.length) {
+					//grid.showTile(tile, i +1);
+					stage.update();
+				} else {
+					stage.addChild(container);
+				    stage.update();
+				}
 			}
+            
 
 			this.recordTileInfos = function (tile) {
 				var lastEntry;
 				History.push(tile);
 				lastEntry = History[History.length-1];
 				//console.log(lastEntry);
-			}
+			};
 
 			/**
 			* Place the tile in the grid.
@@ -369,6 +387,8 @@
 
 						//add info to queue
 						tileQueue[i] = grid.getTileInfos(tile, settings.Items[i]);
+
+                        
 					}
 				}
 				grid.showTile(tileQueue);
@@ -379,26 +399,39 @@
 					$('#stage').showGrid(History);
 				});
 			};
-		}
 
 
-        function playSequence () {
+            this.generateSequence = function () {
+                sequence = [];
+                for(var i=1;i<=level;i++){
+                    var random = Math.round(Math.random()*3) +1;
+                    sequence.push(random);
+                }
+                console.log("Sequence:"+sequence);
+            };
 
-            $().generateSequence();
+            this.playSequence = function () {
 
-            $(sequence).each(function (e){
-                var timeoutID = window.setTimeout(function(){
-                   // grid.showTile(history, 1);
-                    console.log(sequence[e]);
+                $(sequence).each(function (e){
+                    var timeoutID = window.setTimeout(function(){
+
+                        //grid.showOneTile(tileQueue[sequence[e]],sequence[e]);
+
+                        console.log(sequence[e]);
                     }, (e+1)*1000);
-                /*
-                var timeoutID2 = window.setTimeout(function(){
-                 //   $("#"+sequence[e]).css("backgroundColor","black");
 
-                }, (e+1)*1000+500+((e+1)*100));
-                */
-            });
-        }
+
+                    var timeoutID2 = window.setTimeout(function(){
+
+                        //grid.showOneTile(tileQueue[sequence[e]],sequence[e]);
+
+                    }, (e+1)*1000+500+((e+1)*100));
+
+                });
+            };
+
+
+		}
 
 
 		// Build the grid
@@ -406,12 +439,16 @@
 		grid.build();
 		grid.placeTiles();
 
+        grid.generateSequence();
+        grid.playSequence();
 	};
+
+
 }(jQuery));
 
 
 $(function () {
-    $().generateSequence();
+
 	$('#stage').showGrid();
 	
 });
