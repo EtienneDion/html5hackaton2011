@@ -154,10 +154,10 @@
 				}
 			}
 			tile.target = this.targets[0];
-			tile.x = tile.target.x * settings.stage.width / settings.grid.width;
-			tile.y = tile.target.y * settings.stage.height / settings.grid.height;
-			tile.fullWidth = tile.width * settings.stage.width / settings.grid.width;
-			tile.fullHeight = tile.height * settings.stage.height / settings.grid.height;
+			tile.x = (tile.target.x * settings.stage.width / settings.grid.width) +2;
+			tile.y = (tile.target.y * settings.stage.height / settings.grid.height) +2;
+			tile.fullWidth = (tile.width * settings.stage.width / settings.grid.width) -4;
+			tile.fullHeight = (tile.height * settings.stage.height / settings.grid.height) -4;
 		}
 
 		Moza.Coord = Coord;
@@ -369,23 +369,18 @@
 				});
 			};
 
-
             this.generateSequence = function () {
                 sequence = [];
                 for(var i=1;i<=level;i++){
                     var random = Math.round(Math.random()*(tileQueue.length -1));
                     sequence.push(random);
                 }
-                console.log("Sequence:"+sequence);
             };
-
 
             this.playSequence = function () {
                 $(sequence).each(function (e){
                     var timeoutID = window.setTimeout(function(){
-						console.log(sequence[e]);
                         grid.showOneTile(tileQueue[sequence[e]], 1);
-                        //console.log(sequence[e]);
                     }, (e+1)*1000);
 
                     var timeoutID2 = window.setTimeout(function(){

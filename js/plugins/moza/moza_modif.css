@@ -8,7 +8,7 @@ header, nav, section, aside, footer, time{
 
 /* Grid */
 #canvasHolder{position: relative;width:600px;height:500px;margin: 0 auto;}
-#stage{background-color:#CCCCCC;margin: 0 auto}
+#stage{background-color:#000;margin: 0 auto}
 .tile{
 	display:inline-block;
 	*display:inline;
