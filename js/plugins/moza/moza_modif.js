@@ -298,32 +298,30 @@
 				}
 			};
 
-            this.showOneTile = function(tile, i) {
+            this.showOneTile = function(tile, over) {
+
 				var tileTmpl, tileCtn, animSpeed = 50;
-				if (i === undefined) {
-					i = 0;
-				}
 
-
-				var tile_top = tile[i].x,
-					tile_left = tile[i].y,
-					tile_width = tile[i].width,
-					tile_height = tile[i].height,
-					color = tile[i].color,
-					color_over = tile[i].color_over;
+				var tile_top = tile.x,
+					tile_left = tile.y,
+					tile_width = tile.width,
+					tile_height = tile.height,
+					color = tile.color,
+					color_over = tile.color_over;
 
                 simon= new Shape();
-                simon.graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
+
+                if (over){
+                    simon.graphics.beginFill("#000000").drawRect(tile_top, tile_left, tile_width, tile_height).beginFill("#000000");
+                } else {
+                    simon.graphics.beginFill(color).drawRect(tile_top, tile_left, tile_width, tile_height).beginFill(color);
+                }
 
 				container.addChild(simon);
+                stage.addChild(container);
+                stage.update();
+                
 
-				if (i + 1 < tile.length) {
-					//grid.showTile(tile, i +1);
-					stage.update();
-				} else {
-					stage.addChild(container);
-				    stage.update();
-				}
 			}
             
 
@@ -413,22 +411,25 @@
             this.playSequence = function () {
 
                 $(sequence).each(function (e){
+
+
                     var timeoutID = window.setTimeout(function(){
 
-                        //grid.showOneTile(tileQueue[sequence[e]],sequence[e]);
+                        grid.showOneTile(tileQueue[sequence[e]], 1);
 
-                        console.log(sequence[e]);
+                        //console.log(sequence[e]);
                     }, (e+1)*1000);
 
 
                     var timeoutID2 = window.setTimeout(function(){
 
-                        //grid.showOneTile(tileQueue[sequence[e]],sequence[e]);
+                        grid.showOneTile(tileQueue[sequence[e]], 0);
 
                     }, (e+1)*1000+500+((e+1)*100));
 
                 });
             };
+
 
 
 		}
