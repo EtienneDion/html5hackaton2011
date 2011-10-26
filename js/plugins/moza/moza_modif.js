@@ -278,14 +278,15 @@
                 simon.id = tile.id;
 
                 if (over){
-                    simon.graphics.beginFill("#ffffff").drawRoundRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight, 5).beginFill("#ffffff");
+                    simon.graphics.beginFill("#8B2323").drawRoundRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight, 5).beginFill("#8B2323");
                 } else {
                     simon.graphics.beginFill(tile.color).drawRoundRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight,5).beginFill(tile.color);
                 }
 
                 simon.onClick = function(evt) {
                     grid.recordTileInfos(tile);
-                    simon.graphics.beginFill("#ffffff").drawRoundRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight,5).beginFill("#ffffff");console.log(this.id);
+                    simon.graphics.beginFill("#8B2323").drawRoundRect(tile.x, tile.y, tile.fullWidth, tile.fullHeight,5).beginFill("#8B2323");
+                    console.log(this.id);
                     grid.listen_sequence(this.id);
                     stage.update();
 				}
