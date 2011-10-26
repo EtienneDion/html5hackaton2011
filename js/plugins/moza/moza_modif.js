@@ -1,11 +1,22 @@
 (function ($, undef) {
 	"use strict";
 
+    var sequence = [],
+    level = 3;
+
 	var Moza = {};
 	window.Moza = Moza;
 
-	
-	
+    $.fn.generateSequence = function (options) {
+        sequence = [];
+        for(var i=1;i<=level;i++){
+            var random = Math.round(Math.random()*3) +1;
+            sequence.push(random);
+        }
+        console.log("Sequence:"+sequence);
+    };
+
+
 	/**
 	* Define grid specification
 	*/
@@ -47,9 +58,9 @@
 			Coords = {
 				all: [],
 				free: [],
-				taken: [],
-				history: [],
+				taken: []
 			},
+			History = [],
 			tileWidth = '',
 			tileheight = '',
 			x = 0,
@@ -57,8 +68,10 @@
 
 		// Merge the default and user settings
 		if (options) {
-			settings = $.extend(settings, options);
+			//settings = $.extend(settings, options);
+			History = $.extend(History, options);
 		}
+		console.log(History);
 		var height = this.height();
 		var width = this.width();
 		var canvas;
@@ -212,7 +225,7 @@
 
 			this.shuffle = function (array) {
 				var j, x, i;
-				for (j, x, i = array.length; i; j = parseInt(0.4 * i, 10), x = array[--i], array[i] = array[j], array[j] = x) {
+				for (j, x, i = array.length; i; j = parseInt(Math.random() * i, 10), x = array[--i], array[i] = array[j], array[j] = x) {
 				}
 				return array;
 			};
@@ -249,7 +262,7 @@
                     color: tile.color,
                     color_over:tile.color_over
 				};
-                console.log(infos.width, infos.height, infos.x, infos.y);
+                
 				return infos;
 			};
 			
@@ -280,6 +293,8 @@
 
                     this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile_top, tile_left, tile_width, tile_height).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
                     console.log(this.id);
+
+
                     stage.update();
 				}
                
@@ -294,6 +309,13 @@
 					stage.addChild(container);
 				    stage.update();
 				}
+			}
+
+			this.recordTileInfos = function (tile) {
+				var lastEntry;
+				History.push(tile);
+				lastEntry = History[History.length-1];
+				//console.log(lastEntry);
 			}
 
 			/**
@@ -311,6 +333,9 @@
 							size = 'small';
 						}
 						tile = new Tile(size, i);
+						if(i == 0 || i == 10){
+							grid.recordTileInfos(tile);
+						}
 						// get all the coord needed for that tile
 						tileOccupationCoords = tile.getOccupationFromCoord(tile.target);
 						// remove the needed coords in the free array and put them in the taken array
@@ -322,12 +347,33 @@
 					}
 				}
 				grid.showTile(tileQueue);
+				//console.log(Coords.history);
 				$('#resetGrid').click(function(ev){
 					ev.preventDefault();
-					$('#stage').showGrid();
+					$('#stage').showGrid(History);
 				});
 			};
 		}
+
+
+        function playSequence () {
+
+        $().generateSequence();
+            
+        $(sequence).each(function (e){
+            var timeoutID = window.setTimeout(function(){
+               // grid.showTile(history, 1);
+                console.log(sequence[e]);
+                }, (e+1)*1000);
+            /*
+            var timeoutID2 = window.setTimeout(function(){
+             //   $("#"+sequence[e]).css("backgroundColor","black");
+
+            }, (e+1)*1000+500+((e+1)*100));
+            */
+        });
+
+
 		// Build the grid
 		grid = new Grid(settings.grid.width, settings.grid.height);
 		grid.build();
@@ -338,5 +384,9 @@
 
 
 $(function () {
+    $().generateSequence();
 	$('#stage').showGrid();
+	
 });
+
+
