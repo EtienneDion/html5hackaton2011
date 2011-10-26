@@ -1,3 +1,4 @@
+- remove ie stuff. dont need it
 - put the "Simon on acid" js code in a seperate tile. js/simonOnAcid.js
 Iv also cleaned the code for the fresh start
 - fix etienne bug. he invert the x and y position for his canva tile

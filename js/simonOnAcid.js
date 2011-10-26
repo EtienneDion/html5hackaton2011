@@ -57,11 +57,3 @@ function listen_sequence(current){
 		}
 	});
 }
-
-$(function() {
-	generate_grid();
-	generate_sequence();
-	console.log(sequence);
-	play_sequence();
-	listen_sequence(0);
-});

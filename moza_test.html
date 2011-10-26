@@ -5,6 +5,7 @@
 		<link rel="stylesheet" href="js/plugins/moza/moza_modif.css" type="text/css" charset="utf-8" />
 	</head>
 	<body>
+		<a id="resetGrid" style="cursor:pointer">BTN save the position of the first square and refresh the other square</a>
 		<div id="canvas"></div>
 		<div id="canvasHolder">
 			<canvas id="stage" width="600" height="500"></canvas>
@@ -25,5 +26,17 @@
 		<script src="js/libs/underscore-1.1.7.min.js"></script>
 		<script src="js/plugins/moza/moza_modif.js"></script>
 		<script src="js/simonOnAcid.js"></script>
+	<script>
+
+
+		$(function() {
+			generate_grid();
+			generate_sequence();
+			console.log(sequence);
+			play_sequence();
+			listen_sequence(0);
+		});
+
+	</script>
 	</body>
 </html>

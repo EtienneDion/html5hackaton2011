@@ -25,30 +25,31 @@
 				//just create more if you need it. ex: xl for xlarge :)
 				tile: {
 					big : {
-						max: 2,
-						width: 4,
-						height: 4
+						max: 1,
+						width: 3,
+						height: 3
 					},
 					medium : {
-						max: 5,
+						max: 6,
 						width: 2,
 						height: 2
 					},
 					small : {
-						max: 10,
+						max: 40,
 						width: 1,
 						height: 1
 					}
 				},
 				testmode: false,
-				random: true
+				random: true,
+				Items: 40
 			},
 			Coords = {
 				all: [],
 				free: [],
-				taken: []
+				taken: [],
+				history: [],
 			},
-			Items,
 			tileWidth = '',
 			tileheight = '',
 			x = 0,
@@ -315,36 +316,21 @@
 					}
 				}
 				grid.showTile(tileQueue);
+				$('#resetGrid').click(function(ev){
+					ev.preventDefault();
+					$('#stage').showGrid();
+				});
 			};
 		}
 		// Build the grid
 		grid = new Grid(settings.grid.width, settings.grid.height);
 		grid.build();
 		grid.placeTiles();
+
 	};
 }(jQuery));
 
 
 $(function () {
-	$('#testCanvas').showGrid({
-		Items: 40,
-		random: true,
-		tile: {
-			big : {
-				'max': 1,
-				'width': 3,
-				'height': 3
-			},
-			medium : {
-				'max': 6,
-				'width': 2,
-				'height': 2
-			},
-			small : {
-				'max': 40,
-				'width': 1,
-				'height': 1
-			}
-		}
-	});
+	$('#stage').showGrid();
 });
