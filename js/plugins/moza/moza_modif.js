@@ -358,20 +358,21 @@
 
         function playSequence () {
 
-        $().generateSequence();
-            
-        $(sequence).each(function (e){
-            var timeoutID = window.setTimeout(function(){
-               // grid.showTile(history, 1);
-                console.log(sequence[e]);
-                }, (e+1)*1000);
-            /*
-            var timeoutID2 = window.setTimeout(function(){
-             //   $("#"+sequence[e]).css("backgroundColor","black");
+            $().generateSequence();
 
-            }, (e+1)*1000+500+((e+1)*100));
-            */
-        });
+            $(sequence).each(function (e){
+                var timeoutID = window.setTimeout(function(){
+                   // grid.showTile(history, 1);
+                    console.log(sequence[e]);
+                    }, (e+1)*1000);
+                /*
+                var timeoutID2 = window.setTimeout(function(){
+                 //   $("#"+sequence[e]).css("backgroundColor","black");
+
+                }, (e+1)*1000+500+((e+1)*100));
+                */
+            });
+        }
 
 
 		// Build the grid
