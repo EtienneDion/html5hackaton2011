@@ -290,11 +290,8 @@
 
 
 				simon.onClick = function(evt) {
-
                     this.graphics.beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200).drawRect(tile_top, tile_left, tile_width, tile_height).beginRadialGradientStroke(["#FFF","#000"],[0,1],150,300,0,150,300,200);
                     console.log(this.id);
-
-
                     stage.update();
 				}
                
@@ -322,9 +319,10 @@
 			* Place the tile in the grid.
 			*/
 			this.placeTiles = function () {
-				var i, j, tile, size = 'medium', tileOccupationCoords, tileQueue = [];
+				var i, j, k, tile, size = 'medium', tileOccupationCoords, tileQueue = [], tileFound;;
 				for (i = 0; i < settings.Items; i += 1) {
 					if (!_.isEmpty(grid.Coords.free)) {
+						tileFound = false;
 						if (i < settings.tile.big.max) {
 							size = 'big';
 						} else if (i < settings.tile.big.max + settings.tile.medium.max) {
@@ -332,16 +330,43 @@
 						} else {
 							size = 'small';
 						}
-						tile = new Tile(size, i);
-						if(i == 0 || i == 10){
-							grid.recordTileInfos(tile);
+
+
+
+						// check if tile is already in history
+						//console.log('check if ' , i, 'is in history ', History[i]);
+						console.log(History.length, ' = history length -----------------');
+						if ( History.length > 0) {
+							console.log('check if tile already in the grid');
+							for ( k = 0; k < History.length; k += 1) {
+								if(History[k].id == i) {
+									tile = History[k];
+tileFound = true;
+										console.log('tile found in history: ', tile);
+								}
+							}
 						}
+console.log('check if tile exist ', tile);
+						if(tileFound === false) {
+							// tile is not in history
+							// create new one
+							tile = new Tile(size, i);
+
+						}
+
+						if (History.length < 2){
+							if(i == 0 || i == 10){
+								grid.recordTileInfos(tile);
+							}
+						}
+
 						// get all the coord needed for that tile
 						tileOccupationCoords = tile.getOccupationFromCoord(tile.target);
 						// remove the needed coords in the free array and put them in the taken array
 						for (j = 0; j < tileOccupationCoords.length; j += 1) {
 							grid.putFreeCoorToTakenCoor(tileOccupationCoords[j]);
 						}
+
 						//add info to queue
 						tileQueue[i] = grid.getTileInfos(tile, settings.Items[i]);
 					}
@@ -350,6 +375,7 @@
 				//console.log(Coords.history);
 				$('#resetGrid').click(function(ev){
 					ev.preventDefault();
+					//console.log(History);
 					$('#stage').showGrid(History);
 				});
 			};
